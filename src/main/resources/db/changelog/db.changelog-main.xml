@@ -1,0 +1,197 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+	<changeSet author="Liquibase" id="1">
+		<createTable tableName="owners">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="first_name" type="VARCHAR(30)"/>
+			<column name="last_name" type="VARCHAR(30)"/>
+			<column name="address" type="VARCHAR(255)"/>
+			<column name="city" type="VARCHAR(80)"/>
+			<column name="telephone" type="VARCHAR(20)"/>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="2">
+		<createTable tableName="pets">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(30)"/>
+			<column name="birth_date" type="date"/>
+			<column name="type_id" type="INT UNSIGNED">
+				<constraints nullable="false"/>
+			</column>
+			<column name="owner_id" type="INT UNSIGNED">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="3">
+		<createTable tableName="specialties">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(80)"/>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="4">
+		<createTable tableName="types">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(80)"/>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="5">
+		<createTable tableName="vet_specialties">
+			<column name="vet_id" type="INT UNSIGNED">
+				<constraints nullable="false"/>
+			</column>
+			<column name="specialty_id" type="INT UNSIGNED">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="6">
+		<createTable tableName="vets">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="first_name" type="VARCHAR(30)"/>
+			<column name="last_name" type="VARCHAR(30)"/>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="7">
+		<createTable tableName="visits">
+			<column autoIncrement="true" name="id" type="INT UNSIGNED">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="pet_id" type="INT UNSIGNED">
+				<constraints nullable="false"/>
+			</column>
+			<column name="visit_date" type="date"/>
+			<column name="description" type="VARCHAR(255)"/>
+		</createTable>
+	</changeSet>
+	<changeSet author="Liquibase" id="8">
+		<addUniqueConstraint columnNames="vet_id, specialty_id" constraintName="vet_id" tableName="vet_specialties"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="9">
+		<createIndex indexName="last_name" tableName="owners">
+			<column name="last_name"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="10">
+		<createIndex indexName="last_name" tableName="vets">
+			<column name="last_name"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="11">
+		<createIndex indexName="name" tableName="pets">
+			<column name="name"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="12">
+		<createIndex indexName="name" tableName="specialties">
+			<column name="name"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="13">
+		<createIndex indexName="name" tableName="types">
+			<column name="name"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="14">
+		<createIndex indexName="owner_id" tableName="pets">
+			<column name="owner_id"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="15">
+		<createIndex indexName="pet_id" tableName="visits">
+			<column name="pet_id"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="16">
+		<createIndex indexName="specialty_id" tableName="vet_specialties">
+			<column name="specialty_id"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="17">
+		<createIndex indexName="type_id" tableName="pets">
+			<column name="type_id"/>
+		</createIndex>
+	</changeSet>
+	<changeSet author="Liquibase" id="18">
+		<addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="pets" constraintName="pets_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="owners" validate="true"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="19">
+		<addForeignKeyConstraint baseColumnNames="type_id" baseTableName="pets" constraintName="pets_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="types" validate="true"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="20">
+		<addForeignKeyConstraint baseColumnNames="vet_id" baseTableName="vet_specialties" constraintName="vet_specialties_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="vets" validate="true"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="21">
+		<addForeignKeyConstraint baseColumnNames="specialty_id" baseTableName="vet_specialties" constraintName="vet_specialties_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="specialties" validate="true"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="22">
+		<addForeignKeyConstraint baseColumnNames="pet_id" baseTableName="visits" constraintName="visits_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="pets" validate="true"/>
+	</changeSet>
+	<changeSet author="Liquibase" id="23">
+		<sql>
+			INSERT IGNORE INTO vets VALUES (1, 'James', 'Carter');
+			INSERT IGNORE INTO vets VALUES (2, 'Helen', 'Leary');
+			INSERT IGNORE INTO vets VALUES (3, 'Linda', 'Douglas');
+			INSERT IGNORE INTO vets VALUES (4, 'Rafael', 'Ortega');
+			INSERT IGNORE INTO vets VALUES (5, 'Henry', 'Stevens');
+			INSERT IGNORE INTO vets VALUES (6, 'Sharon', 'Jenkins');
+
+			INSERT IGNORE INTO specialties VALUES (1, 'radiology');
+			INSERT IGNORE INTO specialties VALUES (2, 'surgery');
+			INSERT IGNORE INTO specialties VALUES (3, 'dentistry');
+
+			INSERT IGNORE INTO vet_specialties VALUES (2, 1);
+			INSERT IGNORE INTO vet_specialties VALUES (3, 2);
+			INSERT IGNORE INTO vet_specialties VALUES (3, 3);
+			INSERT IGNORE INTO vet_specialties VALUES (4, 2);
+			INSERT IGNORE INTO vet_specialties VALUES (5, 1);
+
+			INSERT IGNORE INTO types VALUES (1, 'cat');
+			INSERT IGNORE INTO types VALUES (2, 'dog');
+			INSERT IGNORE INTO types VALUES (3, 'lizard');
+			INSERT IGNORE INTO types VALUES (4, 'snake');
+			INSERT IGNORE INTO types VALUES (5, 'bird');
+			INSERT IGNORE INTO types VALUES (6, 'hamster');
+
+			INSERT IGNORE INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023');
+			INSERT IGNORE INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749');
+			INSERT IGNORE INTO owners VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland', '6085558763');
+			INSERT IGNORE INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor', '6085553198');
+			INSERT IGNORE INTO owners VALUES (5, 'Peter', 'McTavish', '2387 S. Fair Way', 'Madison', '6085552765');
+			INSERT IGNORE INTO owners VALUES (6, 'Jean', 'Coleman', '105 N. Lake St.', 'Monona', '6085552654');
+			INSERT IGNORE INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona', '6085555387');
+			INSERT IGNORE INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683');
+			INSERT IGNORE INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435');
+			INSERT IGNORE INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487');
+
+			INSERT IGNORE INTO pets VALUES (1, 'Leo', '2000-09-07', 1, 1);
+			INSERT IGNORE INTO pets VALUES (2, 'Basil', '2002-08-06', 6, 2);
+			INSERT IGNORE INTO pets VALUES (3, 'Rosy', '2001-04-17', 2, 3);
+			INSERT IGNORE INTO pets VALUES (4, 'Jewel', '2000-03-07', 2, 3);
+			INSERT IGNORE INTO pets VALUES (5, 'Iggy', '2000-11-30', 3, 4);
+			INSERT IGNORE INTO pets VALUES (6, 'George', '2000-01-20', 4, 5);
+			INSERT IGNORE INTO pets VALUES (7, 'Samantha', '1995-09-04', 1, 6);
+			INSERT IGNORE INTO pets VALUES (8, 'Max', '1995-09-04', 1, 6);
+			INSERT IGNORE INTO pets VALUES (9, 'Lucky', '1999-08-06', 5, 7);
+			INSERT IGNORE INTO pets VALUES (10, 'Mulligan', '1997-02-24', 2, 8);
+			INSERT IGNORE INTO pets VALUES (11, 'Freddy', '2000-03-09', 5, 9);
+			INSERT IGNORE INTO pets VALUES (12, 'Lucky', '2000-06-24', 2, 10);
+			INSERT IGNORE INTO pets VALUES (13, 'Sly', '2002-06-08', 1, 10);
+
+			INSERT IGNORE INTO visits VALUES (1, 7, '2010-03-04', 'rabies shot');
+			INSERT IGNORE INTO visits VALUES (2, 8, '2011-03-04', 'rabies shot');
+			INSERT IGNORE INTO visits VALUES (3, 8, '2009-06-04', 'neutered');
+			INSERT IGNORE INTO visits VALUES (4, 7, '2008-09-04', 'spayed');
+		</sql>
+	</changeSet>
+</databaseChangeLog>

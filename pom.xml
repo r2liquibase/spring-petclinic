@@ -119,6 +119,14 @@
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!-- Let's use Liquibase to manage our database changes 'cause life is too damn short and I got shit to do -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>
