@@ -1,0 +1,140 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="r2 (generated)" id="1623172595424-1">
+        <createTable tableName="owners">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(30)"/>
+            <column name="last_name" type="VARCHAR(30)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(80)"/>
+            <column name="telephone" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-2">
+        <createTable tableName="pets">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(30)"/>
+            <column name="birth_date" type="date"/>
+            <column name="type_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-3">
+        <createTable tableName="specialties">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(80)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-4">
+        <createTable tableName="types">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(80)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-5">
+        <createTable tableName="vet_specialties">
+            <column name="vet_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialty_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-6">
+        <createTable tableName="vets">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(30)"/>
+            <column name="last_name" type="VARCHAR(30)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-7">
+        <createTable tableName="visits">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="pet_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visit_date" type="date"/>
+            <column name="description" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-8">
+        <addUniqueConstraint columnNames="vet_id, specialty_id" constraintName="vet_id" tableName="vet_specialties"/>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-9">
+        <createIndex indexName="last_name" tableName="owners">
+            <column name="last_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-10">
+        <createIndex indexName="last_name" tableName="vets">
+            <column name="last_name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-11">
+        <createIndex indexName="name" tableName="pets">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-12">
+        <createIndex indexName="name" tableName="specialties">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-13">
+        <createIndex indexName="name" tableName="types">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-14">
+        <createIndex indexName="owner_id" tableName="pets">
+            <column name="owner_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-15">
+        <createIndex indexName="pet_id" tableName="visits">
+            <column name="pet_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-16">
+        <createIndex indexName="specialty_id" tableName="vet_specialties">
+            <column name="specialty_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-17">
+        <createIndex indexName="type_id" tableName="pets">
+            <column name="type_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-18">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="pets" constraintName="pets_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="owners" validate="true"/>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-19">
+        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="pets" constraintName="pets_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="types" validate="true"/>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-20">
+        <addForeignKeyConstraint baseColumnNames="vet_id" baseTableName="vet_specialties" constraintName="vet_specialties_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="vets" validate="true"/>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-21">
+        <addForeignKeyConstraint baseColumnNames="specialty_id" baseTableName="vet_specialties" constraintName="vet_specialties_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="specialties" validate="true"/>
+    </changeSet>
+    <changeSet author="r2 (generated)" id="1623172595424-22">
+        <addForeignKeyConstraint baseColumnNames="pet_id" baseTableName="visits" constraintName="visits_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="pets" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
