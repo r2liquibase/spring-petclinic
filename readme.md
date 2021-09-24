@@ -14,7 +14,7 @@ Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) applicatio
 ```
 git clone https://github.com/spring-projects/spring-petclinic.git
 cd spring-petclinic
-./mvnw package
+./mvnw package -Dcheckstyle.skip -DskipTests
 docker-compose up
 java -Dspring.profiles.active=mysql -jar target/*.jar
 ```
