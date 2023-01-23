@@ -52,6 +52,9 @@ public class Pet extends NamedEntity {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthDate;
 
+	@Column(name = "chip_id")
+	private long chipId;
+
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;
@@ -69,6 +72,14 @@ public class Pet extends NamedEntity {
 
 	public LocalDate getBirthDate() {
 		return this.birthDate;
+	}
+
+	public void setChipId(long chipId) {
+		this.chipId = chipId;
+	}
+
+	public long getChipId() {
+		return this.chipId;
 	}
 
 	public PetType getType() {

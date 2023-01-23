@@ -48,6 +48,8 @@
             <dt>Birth Date</dt>
             <dd
               th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></dd>
+            <dt>Chip ID</dt>
+            <dd th:text="${pet.chipId}"></dd>
             <dt>Type</dt>
             <dd th:text="${pet.type}"></dd>
           </dl>
