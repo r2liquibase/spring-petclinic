@@ -1,11 +1,13 @@
-version: '3.3'
+version: '3.8'
 
 services:
 
   mysql:
+    # Example image format for private JFrog Docker registry:
+    #    myartifactory.jfrog.io/petclinic-docker/mysql:5.7
     image: mysql:5.7
     ports:
-      - "3306:3306"
+      - 3306:3306
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=
@@ -14,4 +16,25 @@ services:
       - MYSQL_PASSWORD=petclinic
       - MYSQL_DATABASE=petclinic
     volumes:
-      - "./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql"
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
+    networks:
+      - petclinic-net
+
+  petclinic:
+    # Image of petclinic must be available in a Docker registry.
+    # Example image format for private JFrog Docker registry:
+    #   myartifactory.jfrog.io/petclinic-docker/petclinic
+    image: petclinic
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - spring.profiles.active=mysql
+      - MYSQL_URL=jdbc:mysql://mysql/petclinic
+    networks:
+      - petclinic-net
+
+networks:
+  petclinic-net:
